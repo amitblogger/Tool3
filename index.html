@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="SpinSpher - The Ultimate Customizable Spinning Wheel for Giveaways, Games, and Fun Activities!">
+    <title>SpinSpher - Fun & Interactive Spinning Wheel</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="script.js" defer></script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #1a1a2e;
+            color: white;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+        }
+        .hero {
+            padding: 60px;
+            background: linear-gradient(90deg, #ff5733, #ffcc00);
+            color: #000;
+            font-size: 26px;
+            font-weight: bold;
+        }
+        .container {
+            max-width: 1000px;
+            margin: 50px auto;
+            padding: 20px;
+            background: #0f3460;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 255, 255, 0.5);
+        }
+        .features-section {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+            padding: 20px;
+        }
+        .feature-card {
+            width: 300px;
+            background: #16213e;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 255, 255, 0.3);
+            text-align: center;
+        }
+        .feature-card img {
+            width: 100%;
+            border-radius: 5px;
+        }
+        .spin-button {
+            margin-top: 20px;
+            padding: 12px 24px;
+            background: #ff5733;
+            border: none;
+            color: white;
+            font-size: 20px;
+            cursor: pointer;
+            transition: 0.3s;
+            border-radius: 5px;
+        }
+        .spin-button:hover {
+            background: #ff8d72;
+        }
+        .adsense-container {
+            margin: 20px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="hero">
+        <h1>Welcome to SpinSpher</h1>
+        <p>The Ultimate Customizable Spinning Wheel for Fun, Games & Giveaways</p>
+    </div>
+
+    <div class="adsense-container">
+        <!-- Google AdSense Ad Unit -->
+        <ins class="adsbygoogle"
+            style="display:block"
+            data-ad-client="YOUR-ADSENSE-CLIENT-ID"
+            data-ad-slot="YOUR-AD-UNIT-ID"
+            data-ad-format="auto"></ins>
+        <script>
+             (adsbygoogle = window.adsbygoogle || []).push({});
+        </script>
+    </div>
+    
+    <div class="container">
+        <h2>Key Features</h2>
+        <div class="features-section">
+            <div class="feature-card">
+                <img src="customize-wheel.jpg" alt="Customize Wheel">
+                <h3>Fully Customizable Wheel</h3>
+                <p>Modify segments, colors, and fonts for a unique experience.</p>
+            </div>
+            <div class="feature-card">
+                <img src="social-share.jpg" alt="Share Results">
+                <h3>Share Your Spins</h3>
+                <p>Easily share your spin results with friends and followers.</p>
+            </div>
+            <div class="feature-card">
+                <img src="mobile-friendly.jpg" alt="Mobile Friendly">
+                <h3>Mobile Friendly</h3>
+                <p>Optimized for mobile and desktop for seamless use anywhere.</p>
+            </div>
+        </div>
+    </div>
+    
+    <div class="container">
+        <h2>Try Your Luck Now!</h2>
+        <div class="wheel-container">
+            <canvas id="wheelCanvas" width="400" height="400"></canvas>
+        </div>
+        <button class="spin-button" onclick="spinWheel()">Spin Now</button>
+    </div>
+    
+    <script>
+        const canvas = document.getElementById("wheelCanvas");
+        const ctx = canvas.getContext("2d");
+        let segments = ["Winner", "Try Again", "Bonus", "Jackpot", "Spin Again", "Lucky"]; 
+        let startAngle = 0;
+        const arc = Math.PI / (segments.length / 2);
+        let spinning = false;
+        
+        function drawWheel() {
+            for (let i = 0; i < segments.length; i++) {
+                const angle = startAngle + i * arc;
+                ctx.fillStyle = i % 2 === 0 ? "#ff5733" : "#ffcc00";
+                ctx.beginPath();
+                ctx.moveTo(200, 200);
+                ctx.arc(200, 200, 200, angle, angle + arc, false);
+                ctx.lineTo(200, 200);
+                ctx.fill();
+                ctx.fillStyle = "#000";
+                ctx.font = "16px Arial";
+                ctx.fillText(segments[i], 170 + Math.cos(angle + arc / 2) * 120, 200 + Math.sin(angle + arc / 2) * 120);
+            }
+        }
+        function spinWheel() {
+            if (spinning) return;
+            spinning = true;
+            let spinAngle = Math.random() * 360 + 1800;
+            let counter = 0;
+            function animateSpin() {
+                if (counter < 50) {
+                    startAngle += spinAngle / 50 * (1 - counter / 50);
+                    drawWheel();
+                    counter++;
+                    requestAnimationFrame(animateSpin);
+                } else {
+                    spinning = false;
+                }
+            }
+            requestAnimationFrame(animateSpin);
+        }
+        drawWheel();
+    </script>
+</body>
+</html>
